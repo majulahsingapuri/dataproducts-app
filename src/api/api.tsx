@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Citation, PaginatedList, Researcher, ResearcherStub, ResearcherWebsites } from './types';
+import { Citation, GraphData, PaginatedList, Researcher, ResearcherStub, ResearcherWebsites } from './types';
 import useSWR from "swr"
 
 
@@ -34,6 +34,15 @@ export function useResearcherWebsites(searchText: string) {
     const { data, error } = useSWR<PaginatedList<ResearcherWebsites>>(`/api/researcher/${searchText}/websites`, fetcher)
     return {
         websites: data,
+        loading: !error && !data,
+        error: error
+    }
+}
+
+export function useSCSEGraph() {
+    const { data, error } = useSWR<GraphData>(`/api/scse/graph`, fetcher)
+    return {
+        graph: data,
         loading: !error && !data,
         error: error
     }

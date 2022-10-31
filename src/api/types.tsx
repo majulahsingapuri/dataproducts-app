@@ -55,3 +55,28 @@ export type Publication = {
     paper_url: string | null
     conference: string | null
 }
+
+export type InterestNode = {
+    id: string
+    name: string
+    type: "interest"
+}
+
+export type ProfNode = {
+    id: string
+    name: string
+    type: "prof"
+    data: Researcher
+}
+
+export type Node = InterestNode | ProfNode
+
+export type Link = {
+    source: string
+    target: string
+}
+
+export type GraphData = {
+    nodes: Node[]
+    links: Link[]
+}
