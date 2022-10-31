@@ -123,41 +123,44 @@ const Publications = ({ researcher }: { researcher: Researcher }) => {
 
 
   return (
-    <div
-      id="scrollableDiv"
-      style={{
-        height: 400,
-        overflow: 'auto',
-        padding: '0 16px',
-        border: '1px solid rgba(140, 140, 140, 0.35)',
-      }}
-    >
-      {
-        data && publications ?
-          <InfiniteScroll
-            dataLength={publications.length}
-            next={() => setSize(size + 1)}
-            hasMore={publications.length < maxData}
-            loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-            endMessage={<Divider plain>End</Divider>}
-            scrollableTarget="scrollableDiv"
-          >
-            <List
-              dataSource={publications}
-              renderItem={item => (
-                <List.Item key={item.title}>
-                  <List.Item.Meta
-                    title={<a href={item.paper_url ? item.paper_url : "#"}>{item.title}</a>}
-                    description={item.conference}
-                  />
-                  <div>Citations: {item.num_citations}</div>
-                </List.Item>
-              )}
-            />
-          </InfiniteScroll>
-          : ""
-      }
-    </div>
+    <>
+      <h3>Publications</h3>
+      <div
+        id="scrollableDiv"
+        style={{
+          height: 400,
+          overflow: 'auto',
+          padding: '0 16px',
+          border: '1px solid rgba(140, 140, 140, 0.35)',
+        }}
+      >
+        {
+          data && publications ?
+            <InfiniteScroll
+              dataLength={publications.length}
+              next={() => setSize(size + 1)}
+              hasMore={publications.length < maxData}
+              loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+              endMessage={<Divider plain>End</Divider>}
+              scrollableTarget="scrollableDiv"
+            >
+              <List
+                dataSource={publications}
+                renderItem={item => (
+                  <List.Item key={item.title}>
+                    <List.Item.Meta
+                      title={<a href={item.paper_url ? item.paper_url : "#"}>{item.title}</a>}
+                      description={item.conference}
+                    />
+                    <div>Citations: {item.num_citations}</div>
+                  </List.Item>
+                )}
+              />
+            </InfiniteScroll>
+            : ""
+        }
+      </div>
+    </>
   )
 }
 
@@ -247,7 +250,7 @@ const SCSE: React.FC = () => {
         nodeAutoColorBy="type"
         nodeLabel={(node: any) => {
           return `<div>
-          ${node.type === "prof" ? `<h4>Prof: ${node.name}</h4><p>Citations:${node.data.citations}</p>` :`<h4>Interest: ${node.name}</h4>`}
+          ${node.type === "prof" ? `<h4>Prof: ${node.name}</h4><p>Citations:${node.data.citations}</p>` : `<h4>Interest: ${node.name}</h4>`}
           </div>`
         }}
         nodeCanvasObject={(node: any, ctx, globalScale) => {
